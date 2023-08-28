@@ -75,12 +75,20 @@ dependencies {
     // Dagger-Hilt
     implementation("com.google.dagger:hilt-android:2.45")
     kapt("com.google.dagger:hilt-android-compiler:2.45")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
 
     // Retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:okhttp:4.9.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
+    // Palette Color
+    implementation ("androidx.palette:palette:1.0.0")
+
+    // Coil Compose
+    implementation ("io.coil-kt:coil-compose:2.2.2")
 
 }
 
