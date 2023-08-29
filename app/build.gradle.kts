@@ -84,6 +84,7 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.9.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
+
     // Palette Color
     implementation ("androidx.palette:palette:1.0.0")
 
