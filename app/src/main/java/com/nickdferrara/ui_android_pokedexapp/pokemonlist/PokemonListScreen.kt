@@ -205,11 +205,6 @@ fun PokedexEntry(
             SubcomposeAsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(entry.imageUrl)
-                    .target {
-                        viewModel.calcDominantColor(it) { color ->
-                            dominantColor = color
-                        }
-                    }
                     .crossfade(true)
                     .build(),
                 loading = {
