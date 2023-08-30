@@ -13,6 +13,7 @@ import com.nickdferrara.ui_android_pokedexapp.repository.PokemonRepository
 import com.nickdferrara.ui_android_pokedexapp.util.Contants.PAGE_SIZE
 import com.nickdferrara.ui_android_pokedexapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
@@ -29,8 +30,45 @@ class PokemonListViewModel @Inject constructor(
     var isLoading = mutableStateOf(false)
     var endReached = mutableStateOf(false)
 
+    private var cachedPokemonList = listOf<PokedexListEntry>()
+    private var isSearchStarting = true
+    var isSearching = mutableStateOf(false)
+
     init {
         loadPokemonPaginated()
+    }
+
+    fun searchPokemonList(query: String) {
+
+        val listToSearch = if (isSearchStarting) {
+            pokemonList.value
+        } else {
+            cachedPokemonList
+        }
+
+        // Coroutine so that we don't search on the main thread and impact performance
+        viewModelScope.launch(Dispatchers.Default) {
+
+            if (query.isEmpty()) {
+                pokemonList.value = cachedPokemonList
+                isSearching.value = false
+                isSearchStarting = true
+                return@launch
+            }
+
+            val results = listToSearch.filter {
+                it.pokemonName.contains(query.trim(), ignoreCase = true) ||
+                        it.number.toString() == query.trim()
+            }
+
+            if (isSearchStarting) {
+                cachedPokemonList = pokemonList.value
+                isSearchStarting = false
+            }
+
+            pokemonList.value = results
+            isSearching.value = true
+        }
     }
 
     fun loadPokemonPaginated() {
@@ -60,8 +98,6 @@ class PokemonListViewModel @Inject constructor(
                     loadError.value = ""
                     isLoading.value = false
                     pokemonList.value += pokedexEntries
-
-
                 }
                 is Resource.Error -> {
                     loadError.value = result.message!!
