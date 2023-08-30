@@ -207,13 +207,19 @@ fun PokedexEntry(
                     .data(entry.imageUrl)
                     .crossfade(true)
                     .build(),
+                contentDescription = entry.pokemonName,
+
                 loading = {
                     CircularProgressIndicator(
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.scale(0.5f)
                     )
                 },
-                contentDescription = entry.pokemonName,
+                onSuccess = { success ->
+                    viewModel.calcDominantColor(success.result.drawable) { color ->
+                        dominantColor = color
+                    }
+                },
                 modifier = Modifier
                     .size(120.dp)
                     .align(CenterHorizontally)
