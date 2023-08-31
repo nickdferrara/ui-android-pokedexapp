@@ -126,9 +126,7 @@ fun SearchBar(
                         .padding(horizontal = 20.dp, vertical = 12.dp)
                 )
             }
-
         }
-
     }
 }
 
@@ -212,7 +210,6 @@ fun PokedexEntry(
                     .crossfade(true)
                     .build(),
                 contentDescription = entry.pokemonName,
-
                 loading = {
                     CircularProgressIndicator(
                         color = MaterialTheme.colorScheme.primary,
