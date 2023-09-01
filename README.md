@@ -1,4 +1,4 @@
-# ui-android-pokedexapp
+# Pokedexify
 
 ![alt text](https://github.com/nickdferrara/ui-android-pokedexapp/blob/main/PokedexPreview.PNG?raw=true)
 
